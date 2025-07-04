@@ -1,9 +1,9 @@
 const env = {
     development: {
-      baseUrl: 'http://localhost:8080'
+      baseUrl: 'https://baf8-70-95-66-181.ngrok-free.app'
     },
     production: {
-      baseUrl: 'https://baf8-70-95-66-181.ngrok-free.app '
+      baseUrl: 'https://baf8-70-95-66-181.ngrok-free.app'
     }
   }
 
