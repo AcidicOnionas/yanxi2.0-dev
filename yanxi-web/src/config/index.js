@@ -1,9 +1,9 @@
 const env = {
     development: {
-      baseUrl: 'http://baf8-70-95-66-181.ngrok-free.app'
+      baseUrl: 'http://localhost:8080'
     },
     production: {
-      baseUrl: 'http://baf8-70-95-66-181.ngrok-free.app'
+      baseUrl: 'http://api.yanxi.com' // 生产环境API地址
     }
   }
 
