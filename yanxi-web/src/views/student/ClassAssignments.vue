@@ -184,6 +184,7 @@ import { ref, onMounted } from 'vue'
 import { ElMessage, ElSelect, ElOption, ElTag, ElButton, ElDialog, ElMessageBox } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
+import config from '@/config'
 import 'element-plus/dist/index.css'
 
 const router = useRouter()
@@ -225,7 +226,7 @@ const fetchAssignments = async () => {
       params.submitted = filterSubmitted.value
     }
     
-    const response = await axios.get('http://localhost:8080/api/assignments/student', {
+    const response = await axios.get(`${config.baseUrl}/assignments/student`, {
       params,
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -280,7 +281,7 @@ const isOverdue = (dueDate) => {
 }
 
 const downloadAssignment = (assignment) => {
-  const downloadUrl = `http://localhost:8080/api/assignments/${assignment.id}/download`
+      const downloadUrl = `${config.baseUrl}/assignments/${assignment.id}/download`
   axios({
     url: downloadUrl,
     method: 'GET',
@@ -335,7 +336,7 @@ const submitAssignment = async () => {
     const formData = new FormData()
     formData.append('file', uploadFile.value)
     await axios.post(
-      `http://localhost:8080/api/assignments/${uploadAssignmentId.value}/submit`,
+      `${config.baseUrl}/assignments/${uploadAssignmentId.value}/submit`,
       formData,
       {
         headers: {
@@ -361,7 +362,7 @@ const submitAssignment = async () => {
 const handleViewSubmission = async (assignment) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/assignments/${assignment.id}/submission`,
+      `${config.baseUrl}/assignments/${assignment.id}/submission`,
       {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -377,7 +378,7 @@ const handleViewSubmission = async (assignment) => {
 }
 
 const downloadSubmissionFile = (fileUrl) => {
-  const downloadUrl = 'http://localhost:8080/api/assignments/download?fileUrl=' + fileUrl
+      const downloadUrl = `${config.baseUrl}/assignments/download?fileUrl=` + fileUrl
   axios({
     url: downloadUrl,
     method: 'GET',
@@ -417,7 +418,7 @@ const updateSubmission = async () => {
     const formData = new FormData()
     formData.append('file', updateFile.value)
     await axios.put(
-      `http://localhost:8080/api/assignments/${updateAssignmentId.value}/submit`,
+      `${config.baseUrl}/assignments/${updateAssignmentId.value}/submit`,
       formData,
       {
         headers: {
@@ -448,7 +449,7 @@ const handleUnsubmit = (assignment) => {
   ).then(async () => {
     try {
       await axios.delete(
-        `http://localhost:8080/api/assignments/${assignment.id}/unsubmit`,
+        `${config.baseUrl}/assignments/${assignment.id}/unsubmit`,
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`

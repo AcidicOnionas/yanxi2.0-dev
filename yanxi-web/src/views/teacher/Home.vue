@@ -110,6 +110,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+import config from '@/config'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter } from 'vue-router'
 import 'element-plus/dist/index.css'
@@ -130,7 +131,7 @@ const classForm = ref({
 const fetchClasses = async () => {
   try {
     loading.value = true
-    const response = await axios.get('http://localhost:8080/api/classes/teacher', {
+    const response = await axios.get(`${config.baseUrl}/classes/teacher`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -147,7 +148,7 @@ const fetchClasses = async () => {
 
 const handleSubmit = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/api/classes', classForm.value, {
+    const response = await axios.post(`${config.baseUrl}/classes`, classForm.value, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -183,7 +184,7 @@ const deleteClass = async (classItem) => {
       }
     )
 
-    await axios.delete(`http://localhost:8080/api/classes/${classItem.id}`, {
+    await axios.delete(`${config.baseUrl}/classes/${classItem.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

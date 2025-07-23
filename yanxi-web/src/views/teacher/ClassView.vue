@@ -203,6 +203,7 @@ import { ref, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
+import config from '@/config'
 import 'element-plus/dist/index.css'
 
 const router = useRouter()
@@ -234,7 +235,7 @@ const fetchAssignments = async () => {
   try {
     loadingAssignments.value = true
     // Use the general assignments endpoint with classId parameter for better caching
-    const response = await axios.get('http://localhost:8080/api/assignments', {
+    const response = await axios.get(`${config.baseUrl}/assignments`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -259,7 +260,7 @@ const fetchAssignments = async () => {
 const fetchStudents = async () => {
   try {
     loadingStudents.value = true
-    const response = await axios.get('http://localhost:8080/api/classes/teacher/students', {
+    const response = await axios.get(`${config.baseUrl}/classes/teacher/students`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -282,7 +283,7 @@ const handleAssignmentSubmit = async () => {
     
     if (editingAssignment.value) {
       // Update existing assignment
-      await axios.put(`http://localhost:8080/api/assignments/${editingAssignment.value.id}`, {
+      await axios.put(`${config.baseUrl}/assignments/${editingAssignment.value.id}`, {
         title: assignmentForm.value.title,
         description: assignmentForm.value.description,
         dueDate: assignmentForm.value.dueDate
@@ -303,7 +304,7 @@ const handleAssignmentSubmit = async () => {
         formData.append('file', assignmentForm.value.file)
       }
 
-      await axios.post('http://localhost:8080/api/assignments', formData, {
+      await axios.post(`${config.baseUrl}/assignments`, formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data'
@@ -359,7 +360,7 @@ const deleteAssignment = async (assignmentId) => {
     assignments.value = assignments.value.filter(assignment => assignment.id !== assignmentId)
     
     try {
-      await axios.delete(`http://localhost:8080/api/assignments/${assignmentId}`, {
+      await axios.delete(`${config.baseUrl}/assignments/${assignmentId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -387,7 +388,7 @@ const removeStudent = async (student) => {
       type: 'warning'
     })
     
-    await axios.delete(`http://localhost:8080/api/classes/${classId.value}/students/${student.id}`, {
+    await axios.delete(`${config.baseUrl}/classes/${classId.value}/students/${student.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

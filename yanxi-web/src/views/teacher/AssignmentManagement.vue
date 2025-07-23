@@ -233,6 +233,7 @@
   import { ref, onMounted, watch } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import axios from 'axios'
+import config from '@/config'
   
   const loading = ref(false)
   const dialogVisible = ref(false)
@@ -276,7 +277,7 @@
   const fetchAssignments = async () => {
     try {
       loading.value = true
-      const response = await axios.get('http://localhost:8080/api/assignments', {
+      const response = await axios.get(`${config.baseUrl}/assignments`, {
         params: filterForm.value,
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -295,7 +296,7 @@
   // 获取班级列表
   const fetchClasses = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/classes/teacher', {
+      const response = await axios.get(`${config.baseUrl}/classes/teacher`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -311,7 +312,7 @@
   // 获取学生列表
   const fetchStudents = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/classes/teacher/students', {
+      const response = await axios.get(`${config.baseUrl}/classes/teacher/students`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -356,7 +357,7 @@
       await ElMessageBox.confirm('确定要删除这个作业吗？', '提示', {
         type: 'warning'
       })
-      await axios.delete(`http://localhost:8080/api/assignments/${row.id}`, {
+      await axios.delete(`${config.baseUrl}/assignments/${row.id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -412,7 +413,7 @@
         console.log(key, value)
       }
       
-      await axios.post('http://localhost:8080/api/assignments', formData, {
+      await axios.post(`${config.baseUrl}/assignments`, formData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
           'Content-Type': 'multipart/form-data'
@@ -491,7 +492,7 @@
       studentList.value = [] // 清空之前的数据
       currentAssignment.value = assignment
       
-      const response = await axios.get(`http://localhost:8080/api/assignments/${assignment.id}/students`, {
+      const response = await axios.get(`${config.baseUrl}/assignments/${assignment.id}/students`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -529,7 +530,7 @@
       return
     }
     
-    const downloadUrl = `http://localhost:8080/api/assignments/${currentAssignment.value.id}/download/${student.id}`
+    const downloadUrl = `${config.baseUrl}/assignments/${currentAssignment.value.id}/download/${student.id}`
     axios({
       url: downloadUrl,
       method: 'GET',

@@ -79,6 +79,7 @@
   <script setup>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
+import config from '@/config'
   import { ElMessageBox } from 'element-plus'
   import { useRouter } from 'vue-router'
   import 'element-plus/dist/index.css'
@@ -94,7 +95,7 @@
   const fetchClasses = async () => {
     try {
       loading.value = true
-      const response = await axios.get('http://localhost:8080/api/classes/student', {
+      const response = await axios.get(`${config.baseUrl}/classes/student`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -121,7 +122,7 @@
     }
   
     try {
-      const response = await axios.post('http://localhost:8080/api/classes/join', 
+      const response = await axios.post(`${config.baseUrl}/classes/join`, 
         { code: classCode.value },
         {
           headers: {

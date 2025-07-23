@@ -139,6 +139,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import axios from 'axios'
+import config from '@/config'
 import { useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -169,7 +170,7 @@ const filteredStudents = computed(() => {
 
 const fetchClasses = async () => {
   try {
-    const response = await axios.get('http://localhost:8080/api/classes/teacher', {
+    const response = await axios.get(`${config.baseUrl}/classes/teacher`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -191,7 +192,7 @@ const fetchStudents = async () => {
       params.classId = selectedClass.value
     }
     
-    const response = await axios.get('http://localhost:8080/api/classes/teacher/students', {
+    const response = await axios.get(`${config.baseUrl}/classes/teacher/students`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -207,7 +208,7 @@ const fetchStudents = async () => {
 
 const viewStudentDetails = async (student) => {
   try {
-    const response = await axios.get(`http://localhost:8080/api/students/${student.id}`, {
+    const response = await axios.get(`${config.baseUrl}/students/${student.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -226,7 +227,7 @@ const editStudent = (student) => {
 
 const handleSubmit = async () => {
   try {
-    await axios.put(`http://localhost:8080/api/students/${editForm.value.id}`, editForm.value, {
+    await axios.put(`${config.baseUrl}/students/${editForm.value.id}`, editForm.value, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -266,7 +267,7 @@ const removeStudentFromClass = async (student) => {
       }
     )
 
-    await axios.delete(`http://localhost:8080/api/classes/${selectedClass.value}/students/${student.id}`, {
+    await axios.delete(`${config.baseUrl}/classes/${selectedClass.value}/students/${student.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
