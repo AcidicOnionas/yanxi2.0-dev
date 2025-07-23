@@ -89,8 +89,8 @@ CREATE TABLE `assignment_submission` (
   FOREIGN KEY (`student_id`) REFERENCES `user`(`id`) ON DELETE CASCADE,
   UNIQUE KEY `uk_assignment_student` (`assignment_id`, `student_id`),
   INDEX `idx_submission_assignment` (`assignment_id`),
-      INDEX `idx_submission_student` (`student_id`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='作业提交表';
+  INDEX `idx_submission_student` (`student_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='作业提交表';
 
 -- =====================================================
 -- Sample Data for Testing (Optional)

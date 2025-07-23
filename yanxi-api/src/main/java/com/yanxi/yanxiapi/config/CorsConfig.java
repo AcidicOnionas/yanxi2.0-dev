@@ -20,6 +20,8 @@ public class CorsConfig {
         // 允许跨域的源
         config.addAllowedOrigin("http://localhost:5173"); // Vue开发服务器默认端口
         config.addAllowedOrigin("http://localhost:3000"); // 其他可能的前端端口
+        config.addAllowedOriginPattern("http://*"); // Allow any HTTP origin (for development)
+        config.addAllowedOriginPattern("https://*"); // Allow any HTTPS origin
         
         // 允许跨域的请求头
         config.addAllowedHeader("*");

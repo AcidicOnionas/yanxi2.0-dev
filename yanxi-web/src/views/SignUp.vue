@@ -67,7 +67,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
-// import config from '@/config'
+import config from '@/config'
 
 const router = useRouter()
 const loading = ref(false)
@@ -105,8 +105,8 @@ const handleSubmit = async () => {
     
     // 根据用户类型选择注册接口
     const endpoint = formData.userType === 'TEACHER' 
-      ? 'http://localhost:8080/api/users/register/teacher'
-      : 'http://localhost:8080/api/users/register/student'
+      ? `${config.baseUrl}/users/register/teacher`
+      : `${config.baseUrl}/users/register/student`
     
     // 调用注册接口
     const response = await axios.post(endpoint, formData)

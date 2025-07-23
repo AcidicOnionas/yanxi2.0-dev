@@ -40,6 +40,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+import config from '@/config'
 
 const router = useRouter()
 const loading = ref(false)
@@ -61,7 +62,7 @@ const handleSubmit = async () => {
     loading.value = true
     
     // 调用登录接口
-    const response = await axios.post('http://localhost:8080/api/users/login', formData)
+            const response = await axios.post(`${config.baseUrl}/users/login`, formData)
     
     // 保存token和userRole到localStorage
     localStorage.setItem('token', response.data.token)
