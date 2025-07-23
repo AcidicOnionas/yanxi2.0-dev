@@ -186,6 +186,7 @@ import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import 'element-plus/dist/index.css'
+import config from '@/config'
 
 const router = useRouter()
 const classes = ref([])
@@ -215,7 +216,7 @@ const homeworkForm = ref({
 const fetchClasses = async () => {
   try {
     loading.value = true
-    const response = await axios.get('http://localhost:8080/api/classes/teacher', {
+    const response = await axios.get(`${config.baseUrl}/classes/teacher`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -231,13 +232,13 @@ const fetchClasses = async () => {
 const handleSubmit = async () => {
   try {
     if (editingClass.value) {
-      await axios.put(`http://localhost:8080/api/classes/${editingClass.value.id}`, classForm.value, {
+      await axios.put(`${config.baseUrl}/classes/${editingClass.value.id}`, classForm.value, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
       })
     } else {
-      await axios.post('http://localhost:8080/api/classes/', classForm.value, {
+      await axios.post(`${config.baseUrl}/classes/`, classForm.value, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -260,7 +261,7 @@ const deleteClass = async (classId) => {
   if (!confirm('Are you sure you want to delete this class?')) return
   
   try {
-    await axios.delete(`http://localhost:8080/api/classes/${classId}`, {
+    await axios.delete(`${config.baseUrl}/classes/${classId}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -289,7 +290,7 @@ const manageStudents = async (classItem) => {
 const fetchClassStudents = async (classId) => {
   try {
     loadingStudents.value = true
-    const response = await axios.get('http://localhost:8080/api/classes/teacher/students', {
+    const response = await axios.get(`${config.baseUrl}/classes/teacher/students`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       },
@@ -317,7 +318,7 @@ const removeStudentFromClass = async (student) => {
       }
     )
 
-    await axios.delete(`http://localhost:8080/api/classes/${selectedClass.value.id}/students/${student.id}`, {
+          await axios.delete(`${config.baseUrl}/classes/${selectedClass.value.id}/students/${student.id}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -358,7 +359,7 @@ const handleHomeworkSubmit = async () => {
     formData.append('dueDate', dueDateFormatted)
     formData.append('file', homeworkForm.value.file)
 
-    await axios.post('http://localhost:8080/api/assignments', formData, {
+          await axios.post(`${config.baseUrl}/assignments`, formData, {
       headers: {
         'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'multipart/form-data'
