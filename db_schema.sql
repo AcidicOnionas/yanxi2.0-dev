@@ -4,6 +4,7 @@ CREATE TABLE `user` (
   `username` VARCHAR(50) NOT NULL COMMENT '用户名',
   `password` VARCHAR(255) NOT NULL COMMENT '密码（加密）',
   `role` ENUM('teacher','student') NOT NULL COMMENT '角色',
+  `real_name` VARCHAR(100) COMMENT '真实姓名',
   `email` VARCHAR(100) NOT NULL COMMENT '邮箱',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updated_at` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
